@@ -27,8 +27,11 @@ std::string printLegacyData(LegacyData data, char type) {
         case 'i':
             return std::format("{}", data.i);
         case 'd':
-            return std::format("{}", data.d);
+            return std::format("{:.2f}", data.d);
         case 'c':
+            if (data.cPtr == nullptr) {
+                return "nullptr";
+            }
             return std::format("{}", data.cPtr);
         default:
             return std::format("Unknown");
@@ -146,6 +149,7 @@ void LinkedList::destroyList() {
             delete current;
             current = temp;
         }
+        headPtr = nullptr;
 
         counter = 0;
 //     // TODO: Iterate through list, delete all nodes, and reset counter to 0
@@ -220,17 +224,21 @@ int LinkedList::deleteLast() {
         return -1;
     }
 
+        if (headPtr->nextPtr == nullptr) {
+            delete headPtr;
+            headPtr = nullptr;
+            counter--;
+            return 0;
+    }
+
     classNodeVariant* current = headPtr;
 
     while (current->nextPtr->nextPtr != nullptr) {
-
-            if(current->nextPtr->nextPtr == nullptr) {
-                delete current->nextPtr;
-                current->nextPtr = nullptr;
-            }
-            
             current = current->nextPtr;
         }
+
+        delete current->nextPtr;
+        current->nextPtr = nullptr;
 
         counter--;
 
@@ -278,6 +286,9 @@ int LinkedList::printList() {
 //     // Use std::holds_alternative or std::get
 //     // Return -1 if list is empty, 0 on success
 //     return -1;
+    if (headPtr == nullptr) {
+        return -1;
+    }
     classNodeVariant* current = headPtr;   
      
     while(current != nullptr) {
