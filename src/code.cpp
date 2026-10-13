@@ -1,3 +1,5 @@
+#include <string>
+
 std::string AUTHOR_NAME       = "Nick Badovinac";
 std::string AUTHOR_AUTHORSHIP = "I acknowledge that I have worked on this "
 "assignment independently, except where explicitly noted and referenced. "
@@ -41,7 +43,7 @@ std::string printLegacyData(LegacyData data, char type) {
             }
             return std::format("{}", data.cPtr);
         default:
-            return std::format("Unknown");
+            return std::format("unknown");
     }
 }
 
@@ -73,6 +75,7 @@ structNode* createTwoStructNodes() {
 
     value1.i = 5;
     value2.d = 3.14;
+    
 
     
     initStructNode(node1, value1, 'i');
